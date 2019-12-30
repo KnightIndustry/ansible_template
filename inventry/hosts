@@ -1,0 +1,5 @@
+#[master]
+#node11.cluster
+#[node]
+#node12.cluster
+node13.cluster

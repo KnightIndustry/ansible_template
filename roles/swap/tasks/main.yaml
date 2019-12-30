@@ -1,0 +1,9 @@
+---
+- name: Disable swap file system
+  mount:
+    name: swap
+    fstype: swap
+    state: absent
+- name: Disable swap
+  command: swapoff -a
+  when: ansible_swaptotal_mb > 0

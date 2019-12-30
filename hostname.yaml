@@ -1,0 +1,10 @@
+---
+- hosts: all
+  gather_facts: True
+  #remote_user: root
+  #become: True
+  #become_user: root
+  #become_method: sudo
+  tasks:
+  #- hostname : name=node{{ ansible_default_ipv4.address.split('.')[-1] }}  
+  - hostname : name={{ ansible_fqdn }}  

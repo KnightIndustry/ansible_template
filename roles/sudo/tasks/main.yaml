@@ -1,0 +1,10 @@
+---
+- lineinfile:
+    path: /etc/sudoers
+    state: present
+    regexp: '^{{ user }}\s'
+    insertafter: '^root\s'
+    line: '{{ user }} ALL=(ALL) NOPASSWD: ALL'
+    validate: '/usr/sbin/visudo -cf %s'
+
+

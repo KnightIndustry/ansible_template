@@ -1,0 +1,16 @@
+---
+- hosts: all
+  gather_facts: False
+  become: True
+  become_method: sudo
+  vars:
+    jdk_archive: jdk-8u65-linux-x64.tar.gz
+  roles:
+    - jdk
+
+
+
+
+
+
+

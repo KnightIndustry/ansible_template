@@ -1,0 +1,12 @@
+---
+mysql_archive: mysql-5.7.16-linux-glibc2.5-x86_64.tar.gz
+user: deploy
+group: deploy
+mysql_port: 3306
+base_dir: /saas/programes/mysql
+data_dir: /saas/programes/data
+lockdir_dir: /saas/programes/mysql
+config_file: /etc/my.cnf
+daemon_file: /etc/init.d/mysql
+daemon: mysql
+
