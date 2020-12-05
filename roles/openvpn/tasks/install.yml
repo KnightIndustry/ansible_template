@@ -1,5 +1,5 @@
-- name: Install EPEL
-  template:
+- name: CONFIG EPEL REPO 
+  copy:
     src: "{{ item }}"
     dest: present
     owner: root
