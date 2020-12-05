@@ -4,6 +4,14 @@
 
   tasks:
   - debug: 
-       #msg: "{{ ansible_eth0.ipv4.address }} {{ ansible_dns }}"
-       msg: "{{ ansible_memory_mb.real.total *3 / 4 }}M"
+      #msg: "{{ ansible_eth0.ipv4.address }} {{ ansible_dns }}"
+      msg: "{{ ansible_memory_mb.real.total *3 / 4 }}M"
+  - name: verfy
+    command: ssh -V
+    register: sshversion
+  - name: ssh update
+    debug:
+      msg: '{{ sshversion.stderr }}'
+    when:
+      - sshversion.stderr is search("OpenSSH_7.4p1")
 
