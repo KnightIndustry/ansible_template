@@ -1,0 +1,7 @@
+---
+- name: Reboot a slow machine that might have lots of updates to apply
+  #reboot:
+  #  reboot_timeout: 3600
+  #  pre_reboot_delay: "{{ 60 | random(start=30, step=10) }} "
+  debug:
+    msg: "{{ 600 | random(step=30) }}"

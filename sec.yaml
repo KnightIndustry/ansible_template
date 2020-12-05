@@ -1,0 +1,19 @@
+---
+- hosts: all
+  gather_facts: False
+  #become: True
+  #become_method: sudo
+  roles:
+    - sec
+
+
+
+
+
+
+
+
+
+
+
+  
