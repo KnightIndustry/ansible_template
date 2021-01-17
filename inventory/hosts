@@ -1,6 +1,0 @@
-#172.16.51.6  ansible_ssh_user="root"  ansible_ssh_passwd="vienna"
-#172.16.51.6  ansible_ssh_user=root
-
-[vpn]
-172.16.51.16	ansible_ssh_user=root	ansible_ssh_pass='vienna'  clients='jianglw'
-#envtech.top	clients=jianglw
