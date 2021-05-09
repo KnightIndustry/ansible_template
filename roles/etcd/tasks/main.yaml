@@ -1,0 +1,67 @@
+---
+
+- name: Collect facts
+  set_fact:
+    cacheable: yes
+    etcd_listen_public: '{{ "0.0.0.0" if etcd_iface_public == "all" else ansible_default_ipv4.address if etcd_iface_public == "default" else hostvars[inventory_hostname]["ansible_" ~ etcd_iface_public]["ipv4"]["address"] }}'
+    etcd_listen_cluster: '{{ "0.0.0.0" if etcd_iface_cluster == "all" else ansible_default_ipv4.address if etcd_iface_cluster == "default" else hostvars[inventory_hostname]["ansible_" ~ etcd_iface_cluster]["ipv4"]["address"] }}'
+    etcd_address_public: '{{ ansible_fqdn if not etcd_use_ips | bool else ansible_default_ipv4.address if etcd_iface_public is in [ "all", "default" ] else hostvars[inventory_hostname]["ansible_" ~ etcd_iface_public]["ipv4"]["address"] }}'
+    etcd_address_cluster: '{{ ansible_fqdn if not etcd_use_ips | bool else ansible_default_ipv4.address if etcd_iface_cluster is in [ "all", "default" ] else hostvars[inventory_hostname]["ansible_" ~ etcd_iface_cluster]["ipv4"]["address"] }}'
+
+- name: create etcd group
+  group:
+    name: '{{ etcd_group }}'
+    state: present
+
+- name: create etcd user
+  user:
+    name: '{{ etcd_user }}'
+    group: '{{ etcd_group }}'
+    home: '{{ etcd_data_dir }}'
+    state: present
+
+- name: create dirs...
+  file:
+    state: directory
+    path: '{{ item }}'
+    owner: '{{ etcd_user }}'
+    group: '{{ etcd_group }}'
+    mode: 0755
+  with_items:
+    - '{{ etcd_base_dir }}'
+    - '{{ etcd_base_dir }}/bin'
+    - '{{ etcd_base_dir }}/conf'
+    - '{{ etcd_cluster_data_dir }}'
+    - '{{ etcd_cluster_pki_dir }}'
+
+- name: unarchive binary files
+  unarchive:
+    src: '{{ download_url }}/sources/etcd-v3.4.15-linux-amd64.tar.gz'
+    dest: '{{ etcd_base_dir }}/bin'
+    remote_src: yes
+    owner: '{{ etcd_user }}'
+    group: '{{ etcd_group }}'
+    extra_opts:
+    - --strip-components=1
+    exclude:
+      - Documentation
+      - README.md
+      - README-etcdctl.md
+      - READMEv2-etcdctl.md
+    
+- include_tasks: pki.yaml
+  when: etcd_secure | bool
+
+- name: install etcd.service configuration
+  template:
+    src: '{{ item.f }}.j2'
+    dest: '{{ item.d }}/{{ item.f }}'
+    owner: '{{ etcd_user }}'
+    group: '{{ etcd_group }}'
+    mode: 0644
+  with_items:
+    - {f: "etcd.yaml", d: "{{ etcd_base_dir }}/conf"}
+  notify:
+  - restart etcd members
+
+- include_tasks: '{{ etcd_init_system }}.yaml'

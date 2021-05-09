@@ -1,0 +1,22 @@
+---
+- name: create dir 
+  file:
+    path: /etc/confd/{{ item }}
+    state: directory
+    recurse: yes
+    owner: foo
+    group: foo
+  with_items:
+    - bin
+    - conf.d
+    - templates
+- name: sync configurate
+  template:
+    src: "{{ item.templ }}"
+    dest: "/etc/confd/{{ item.path }}"
+    owner: root
+    group: root
+    mode: '0600'
+  loop:
+    - { tmpl: target.tmpl.j2, path: templates/target.tmpl}
+    - { tmpl: target.toml.j2, path: conf.d/target.toml}

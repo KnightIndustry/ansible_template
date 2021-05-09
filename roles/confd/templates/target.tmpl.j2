@@ -1,0 +1,12 @@
+[
+  {{range get "/targets/node_exporter/*"}} 
+  {{$target := json.Value}}
+  {{$collector := $target.labels.collector}}{{if eq $collector "dggts10018162"}}{{.Value}},
+  
+  {{end}}{{end}}
+  
+  {}
+
+]
+
+

@@ -1,0 +1,22 @@
+---
+- name: install etcd.service systemd unit
+  register: etcd_service_modified
+  with_items:
+    - f: etcd.service
+      d: /usr/lib/systemd/system
+  template:
+    src: '{{ item.f }}.j2'
+    dest: '{{ item.d }}/{{ item.f }}'
+    mode: '{{ item.m | default("0644") }}'
+
+- name: systemctl daemon-reload
+  when: etcd_launch and etcd_service_modified is changed
+  systemd:
+    daemon_reload: yes
+
+- name: launching etcd...
+  when: etcd_launch
+  service:
+    name: etcd
+    enabled: yes
+    state: started
