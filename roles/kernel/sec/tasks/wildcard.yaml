@@ -1,0 +1,5 @@
+- name: wildcard2delete
+  file:
+    path: "{{ item.path }}"
+    state: absent
+  loop: "{{ wildcard.files }}"

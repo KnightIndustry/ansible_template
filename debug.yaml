@@ -1,17 +1,20 @@
 ---
-- hosts: all
-  gather_facts: True
-
-  tasks:
-  - debug: 
+- hosts: 192.168.6.21
+  gather_facts: False
+  #remote_user: root
+  #become: True
+  #become_user: root
+  #become_method: sudo
+  roles:
+    - debug
       #msg: "{{ ansible_eth0.ipv4.address }} {{ ansible_dns }}"
-      msg: "{{ ansible_memory_mb.real.total *3 / 4 }}M"
-  - name: verfy
-    command: ssh -V
-    register: sshversion
-  - name: ssh update
-    debug:
-      msg: '{{ sshversion.stderr }}'
-    when:
-      - sshversion.stderr is search("OpenSSH_7.4p1")
+      #msg: "{{ ansible_memory_mb.real.total *3 / 4 }}M"
+  #- name: verfy
+  #  command: ssh -V
+  #  register: sshversion
+  #- name: ssh update
+  #  debug:
+  #    msg: '{{ sshversion.stderr }}'
+  #  when:
+  #    - sshversion.stderr is search("OpenSSH_7.4p1")
 

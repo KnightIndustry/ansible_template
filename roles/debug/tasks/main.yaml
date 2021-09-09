@@ -1,0 +1,6 @@
+---
+- name: debug
+  debug:
+     #msg: "{{ mysql_version.split('.')[0] }}"
+     #msg: "{{ mysql_version|float|round(2,'floor') }}"
+     msg: "{{ mysql_version[0:3] }}"

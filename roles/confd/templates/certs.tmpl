@@ -1,0 +1,7 @@
+  {{range gets "/development/nginx/certs/*"}} 
+  ssl_certificate     /usr/local/nginx/certs/{{base .Key}};
+  ssl_certificate_key /usr/local/nginx/certs/{{.Value}};
+  
+  {{end}}
+  
+

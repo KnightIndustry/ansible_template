@@ -1,0 +1,30 @@
+{{$domains  := ls "/development/nginx/domains/"}} 
+{{range  $domain :=  $domains}}
+
+  server {
+    listen       80;
+  {{range gets "/development/nginx/certs/*"}}
+    listen       443 ssl;
+  {{end}}
+    server_name  {{$domain}};
+  {{range gets "/development/nginx/certs/*"}}
+  ssl_certificate     /usr/local/nginx/certs/{{base .Key}};
+  ssl_certificate_key /usr/local/nginx/certs/{{.Value}};
+
+  {{end}}
+    access_log   logs/{{$domain}}.access.log  main;
+    location / {
+      root   html/{{$domain}};
+      index  index.html index.htm;
+      try_files  $uri $uri/ /index.html;
+      {{$subconf  :=  printf "/development/nginx/domains/%s" $domain}} 
+      {{if getv $subconf}}
+{{getv $subconf}}
+      {{else}}
+      {{end}}
+    }
+
+  }
+{{end}}
+
+

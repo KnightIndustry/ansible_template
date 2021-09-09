@@ -17,12 +17,12 @@
   lineinfile:
     path: "{{ profile }}"
     regexp: JAVA_HOME=
-    line:  export JAVA_HOME={{ java_home }}
+    line:  JAVA_HOME={{ java_home }}
     state: present
 - name: set Java_Path
   lineinfile:
     path: "{{ profile }}"
-    line: export PATH=$JAVA_HOME/bin:$PATH
+    line: PATH=$JAVA_HOME/bin:$PATH
 
 
 

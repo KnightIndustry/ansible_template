@@ -1,10 +1,10 @@
 ---
-- hosts: all
+- hosts: 192.168.22.248
   gather_facts: True
   #remote_user: root
-  become: True
-  become_user: root
-  become_method: sudo
+  #become: True
+  #become_user: root
+  #become_method: sudo
   roles:
     - mysql
 

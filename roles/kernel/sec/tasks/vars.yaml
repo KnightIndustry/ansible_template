@@ -1,0 +1,6 @@
+---
+- name:
+  debug:
+    msg: "{{ ansible_cmdline.audit }}"
+  when:
+    -  ansible_cmdline.audit  is defined

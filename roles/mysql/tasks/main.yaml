@@ -1,4 +1,9 @@
 ---
+- name: Added a consultant whose account you want to expire
+  user:
+    name: mysql
+    shell: /usr/sbin/nologin
+    create_home: False
 - name: mkdir {{ base_dir }}
   file:
     path: "{{ base_dir }}"
@@ -19,13 +24,18 @@
     recurse: yes
 - name: Copy Config File
   template:
-    src: my.cnf
+    src: "{{ mysql_version[0:3] }}/my.cnf"
     dest: "{{ config_file }}"
 - name: Copy Daemon File
-  template: 
-    src: mysql.server
+  copy:
+    src: "{{ base_dir }}/support-files/mysql.server"
     dest: "{{ daemon_file }}"
+    remote_src: yes
     mode: a+x
+  #template: 
+  #  src: mysql.server
+  #  dest: "{{ daemon_file }}"
+  #  mode: a+x
 - name: Init mysql Instance
   shell: "{{ base_dir }}/bin/mysqld --initialize-insecure --user={{ user }} --basedir={{ base_dir }} --datadir={{ data_dir }}"
 - name: start on boot

@@ -1,7 +1,7 @@
 ---
-jdk_archive: jdk-8u65-linux-x64.tar.gz
-java_home: /saas/programes/java
-user: deploy
-group: deploy
+jdk_archive: jdk-8u201-linux-x64.tar.gz
+java_home: /usr/local/java
+user: root
+group: root
 profile: /etc/profile
 

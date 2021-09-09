@@ -1,0 +1,9 @@
+---
+- name: comfig grub args
+  command: /usr/sbin/grubby --update-kernel=ALL --args="audit=1"
+  when:
+    - ansible_cmdline.audit is not defined or ansible_cmdline.audit == "0"
+  notify:
+    - Reboot System
+
+

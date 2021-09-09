@@ -1,0 +1,5 @@
+- hosts: 192.168.6.21
+  gather_facts: True
+  #become: True
+  roles:
+  - role: confd

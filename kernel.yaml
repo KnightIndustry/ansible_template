@@ -1,5 +1,5 @@
 ---
-- hosts: all
+- hosts: 192.168.22.175
   gather_facts: False
   become: True
   become_method: sudo

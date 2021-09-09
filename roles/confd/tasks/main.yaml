@@ -1,19 +1,25 @@
 ---
 - name: create dir 
   file:
-    path: /etc/confd/{{ item }}
+    path: "{{ confd_base_home }}/{{ item }}"
     state: directory
     recurse: yes
-    owner: foo
-    group: foo
+    owner: root
+    group: root
   with_items:
     - bin
     - conf.d
     - templates
+- name: Download binary file
+  get_url:
+    url: "{{ download_url }}/{{ confd_binary_file }}"
+    dest: "{{ confd_base_home }}/bin/confd"
+    mode: 755
+
 - name: sync configurate
   template:
-    src: "{{ item.templ }}"
-    dest: "/etc/confd/{{ item.path }}"
+    src: "{{ item.tmpl }}"
+    dest: "{{ confd_base_home }}/{{ item.path }}"
     owner: root
     group: root
     mode: '0600'
