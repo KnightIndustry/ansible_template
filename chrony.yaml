@@ -1,0 +1,8 @@
+---
+- hosts: dev
+  gather_facts: True
+  #become: True
+  #remote_user: root
+  #become_method: sudo
+  roles:
+    - chrony

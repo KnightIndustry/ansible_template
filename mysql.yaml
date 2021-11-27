@@ -1,5 +1,5 @@
 ---
-- hosts: 192.168.22.248
+- hosts: 192.168.22.101
   gather_facts: True
   #remote_user: root
   #become: True

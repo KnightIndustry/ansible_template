@@ -1,0 +1,6 @@
+---
+- name: sync time
+  service:
+    name: chronyd
+    enabled: yes
+    state: started

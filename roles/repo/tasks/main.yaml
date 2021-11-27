@@ -1,0 +1,28 @@
+- name: list the files 
+  find:
+    paths: /etc/yum.repos.d
+    use_regex: yes
+    #recurse: yes
+    patterns: 
+      - ".*.repo$"
+  register: wildcard
+#- name: vars
+#  debug: 
+#    msg: "{{ wildcard.files }}"
+- name: wildcard2delete
+  file:
+    path: "{{ item.path }}"
+    state: absent
+  loop: "{{ wildcard.files }}"
+
+- name: Add local repositories 
+  yum_repository:
+    name: local
+    file: local
+    enabled: yes
+    baseurl: https://registry.zmyiot.com/nexus/repository/CentOS-7
+    gpgcheck: no
+    state: present
+    keepcache: '0'
+    description: Repositories Rowered by SDBJ
+

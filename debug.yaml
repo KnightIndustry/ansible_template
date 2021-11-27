@@ -1,13 +1,13 @@
 ---
 - hosts: 192.168.6.21
-  gather_facts: False
+  gather_facts: True
   #remote_user: root
   #become: True
   #become_user: root
   #become_method: sudo
   roles:
     - debug
-      #msg: "{{ ansible_eth0.ipv4.address }} {{ ansible_dns }}"
+      #msg: "{{ ansible_default_ipv4.address }} {{ ansible_dns }}"
       #msg: "{{ ansible_memory_mb.real.total *3 / 4 }}M"
   #- name: verfy
   #  command: ssh -V

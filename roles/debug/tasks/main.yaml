@@ -3,4 +3,8 @@
   debug:
      #msg: "{{ mysql_version.split('.')[0] }}"
      #msg: "{{ mysql_version|float|round(2,'floor') }}"
-     msg: "{{ mysql_version[0:3] }}"
+     #msg: "{{ mysql_version[0:3] }}"
+     msg: "{{ ansible_default_ipv4.address.split('.')[-2]  }}"
+  when:
+     - ( ansible_default_ipv4.address.split('.')[-2]  ) == '6'
+     
