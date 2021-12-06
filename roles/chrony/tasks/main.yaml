@@ -3,8 +3,8 @@
   yum:
     name: chrony
     state: present
-    #disablerepo: "Centos*"
-    #enablerepo: "local"
+    disablerepo: '*'
+    enablerepo: 'local'
   notify:
     - sync time
 - name: sync configuration

@@ -1,5 +1,5 @@
 ---
-- name: Added a consultant whose account you want to expire
+- name: Add user for mysql daemonn
   user:
     name: mysql
     shell: /usr/sbin/nologin

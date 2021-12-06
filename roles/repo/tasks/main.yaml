@@ -2,7 +2,8 @@
   find:
     paths: /etc/yum.repos.d
     use_regex: yes
-    #recurse: yes
+    recurse: yes
+    excludes: local.repo
     patterns: 
       - ".*.repo$"
   register: wildcard
@@ -16,13 +17,19 @@
   loop: "{{ wildcard.files }}"
 
 - name: Add local repositories 
-  yum_repository:
-    name: local
-    file: local
-    enabled: yes
-    baseurl: https://registry.zmyiot.com/nexus/repository/CentOS-7
-    gpgcheck: no
-    state: present
-    keepcache: '0'
-    description: Repositories Rowered by SDBJ
+  template:
+    src: local.repo
+    dest: /etc/yum.repos.d/local.repo
+    mode: 0644
+    owner: root
+    group: root
+  #yum_repository:
+  #  name: local
+  #  file: local
+  #  enabled: yes
+  #  baseurl: https://registry.zmyiot.com/nexus/repository/{{ ansible_distribution }}-{{ ansible_distribution_major_version }}
+  #  gpgcheck: no
+  #  state: present
+  #  keepcache: '0'
+  #  description: local
 
