@@ -3,5 +3,8 @@ name = local
 baseurl = https://registry.zmyiot.com/nexus/repository/{{ ansible_distribution }}-{{ ansible_distribution_major_version }}
 enabled = 1
 gpgcheck = 0
-keepcache = 0
+keepalive = yes
+# metadata one month
+metadata_expire = 2592000
+keepcache = 1
 

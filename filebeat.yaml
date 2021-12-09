@@ -1,5 +1,5 @@
 ---
-- hosts: 192.168.22.89
+- hosts: waf
   gather_facts: True
   #become: True
   #remote_user: root

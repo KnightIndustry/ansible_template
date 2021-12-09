@@ -1,4 +1,8 @@
 ---
+- name: Check if tomcat exists
+  stat:
+    path: /usr/local/tomcat
+  register: tomcat
 - name: install filebeat
   yum:
     name: filebeat
@@ -7,6 +11,7 @@
     enablerepo: 'local'
   notify:
     - start filebeat
+  when: tomcat.stat.exists
 - name: sync configuration
   template:
     src: filebeat.j2
@@ -14,7 +19,6 @@
     owner: root
     group: root
     mode: 0644
-  #when:
-  #  - ansible_default_ipv4.address.split('.')[-2] != '22'
+  when: tomcat.stat.exists
   notify:
     - start filebeat
