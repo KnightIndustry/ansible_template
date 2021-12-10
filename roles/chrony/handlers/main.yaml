@@ -1,6 +1,6 @@
 ---
-- name: sync time
+- name: start daemon
   service:
     name: chronyd
     enabled: yes
-    state: started
+    state: restarted

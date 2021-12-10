@@ -1,0 +1,12 @@
+---
+- name: Collect facts
+  set_fact:
+    Waf: true
+  when:
+     - ( ansible_default_ipv4.address.split('.')[-2] == '22' or ansible_default_ipv4.address.split('.')[-2] == '23' or ansible_default_ipv4.address.split('.')[-2] == '25' )
+- name: Collect facts
+  set_fact:
+    isWaf: "{{ Waf |default(false) }}"
+- name: debug
+  debug:
+     msg: "{{ isWaf |default(false) }}"

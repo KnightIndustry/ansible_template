@@ -1,7 +1,8 @@
 # Use public servers from the pool.ntp.org project.
 # Please consider joining the pool (http://www.pool.ntp.org/join.html).
-server pool.ntp.org iburst
-#server 1.centos.pool.ntp.org iburst
+{% for server in ntp %}
+server {{ server }} iburst
+{% endfor %}
 
 # Ignore stratum in source selection.
 stratumweight 0.05

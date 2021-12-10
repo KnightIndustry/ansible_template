@@ -1,5 +1,5 @@
 ---
-- hosts: dev
+- hosts: test
   gather_facts: True
   #become: True
   #remote_user: root

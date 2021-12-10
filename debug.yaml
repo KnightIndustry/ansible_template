@@ -1,5 +1,5 @@
 ---
-- hosts: 192.168.6.21
+- hosts: test
   gather_facts: True
   #remote_user: root
   #become: True

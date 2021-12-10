@@ -1,4 +1,8 @@
 ---
+- include_vars: waf.yaml
+  when: isWaf
+- include_vars: general.yaml
+  when: not isWaf
 - name: install chrony
   yum:
     name: chrony
@@ -6,36 +10,21 @@
     disablerepo: '*'
     enablerepo: 'local'
   notify:
-    - sync time
+    - start daemon
 - name: sync configuration
   template:
-    src: chrony.conf
+    src: chrony.j2
     dest: /etc/chrony.conf
     owner: root
     group: root
     mode: 0644
-  when:
-    - ansible_default_ipv4.address.split('.')[-2] != '22'
-    - ansible_default_ipv4.address.split('.')[-2] != '23'
-    - ansible_default_ipv4.address.split('.')[-2] != '25'
   notify:
-    - sync time
-- name: sync configuration
-  template:
-    src: chrony.yzgf
-    dest: /etc/chrony.conf
-    owner: root
-    group: root
-    mode: 0644
-  when:
-    - ansible_default_ipv4.address.split('.')[-2] == '22' or ansible_default_ipv4.address.split('.')[-2] == '23' or ansible_default_ipv4.address.split('.')[-2] == '25'
-  notify:
-    - sync time
+    - start daemon
 - name: config daemon args
   lineinfile:
     path: /etc/sysconfig/chronyd
     regexp: '^OPTIONS='
     line: 'OPTIONS="-4"'
   notify:
-    - sync time
+    - start daemon
 

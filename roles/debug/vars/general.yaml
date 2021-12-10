@@ -1,0 +1,4 @@
+---
+ntp:
+  - ntp.aliyun.com
+  - pool.ntp.org
