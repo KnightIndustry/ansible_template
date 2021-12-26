@@ -2,7 +2,7 @@
 - name: deliver authorized_keys
   authorized_key: 
     user: root
-    key: "{{ lookup('file', '~/.ssh/id_rsa.pub') }}"
+    key: "{{ lookup('file', '/home/deploy/.ssh/id_rsa.pub') }}"
     state: present
     exclusive: yes
 
