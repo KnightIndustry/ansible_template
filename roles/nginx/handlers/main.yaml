@@ -1,0 +1,10 @@
+---
+- name: random delay
+  wait_for:
+    timeout: "{{ 60 | random(start=0, step=10) }} "
+  delegate_to: localhost
+
+- name: reload nginx
+  systemd: 
+    name: nginx
+    state: reloaded

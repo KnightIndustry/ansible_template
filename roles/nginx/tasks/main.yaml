@@ -1,0 +1,25 @@
+- name: Synchronize nginx global
+  synchronize:
+    src: "files/nginx/{{ item }}"
+    dest: "/usr/local/nginx"
+    delete: yes
+    recursive: yes
+    checksum: yes
+    #owner: yes
+    #group: yes
+    rsync_opts:
+      - "--exclude=logs/*.pid"
+      - "--exclude=logs/*.log"
+      - "--exclude=logs/others/*"
+      - "--exclude=logs/rzcf.com/*"
+      - "--exclude=logs/ylww.com/*"
+      - "--exclude=logs/vyiot.com/*"
+      - "--exclude=logs/zmyiot.com/*"
+  loop:
+    - conf
+    #- logs
+    - certs
+  notify:
+    - reload nginx
+    - random delay
+
