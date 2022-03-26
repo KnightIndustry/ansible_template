@@ -1,0 +1,21 @@
+---
+#- include_vars: waf.yaml
+#  when: isWaf
+#- include_vars: general.yaml
+#  when: not isWaf
+
+- name: enure zabbix server 
+  lineinfile:
+    dest: /usr/local/zabbix/conf/zabbix_agentd.conf
+    regexp: "^Server="
+    line: "Server=192.168.25.240"
+  notify:
+    - restart zabbix agent
+
+- name: enure zabbix server 
+  lineinfile:
+    dest: /usr/local/zabbix/conf/zabbix_agentd.conf
+    regexp: "^ServerActive="
+    line: "Server=192.168.25.240"
+  notify:
+    - restart zabbix agent

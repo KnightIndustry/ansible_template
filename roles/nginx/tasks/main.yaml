@@ -17,8 +17,8 @@
       - "--exclude=logs/zmyiot.com/*"
   loop:
     - conf
-    #- logs
-    - certs
+    - logs
+    #- certs
   notify:
     - reload nginx
     - random delay
