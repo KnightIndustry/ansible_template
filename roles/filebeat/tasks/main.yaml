@@ -6,7 +6,7 @@
 - name: install filebeat
   yum:
     name: filebeat
-    state: present
+    state: latest
     disablerepo: '*'
     enablerepo: 'local'
   notify:

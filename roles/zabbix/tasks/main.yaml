@@ -16,6 +16,6 @@
   lineinfile:
     dest: /usr/local/zabbix/conf/zabbix_agentd.conf
     regexp: "^ServerActive="
-    line: "Server=192.168.25.240"
+    line: "ServerActive=192.168.25.240"
   notify:
     - restart zabbix agent

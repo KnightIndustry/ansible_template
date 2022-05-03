@@ -1,5 +1,5 @@
 ---
-- hosts: nginx
+- hosts: 192.168.22.232
   gather_facts: True
   #become: True
   #remote_user: root

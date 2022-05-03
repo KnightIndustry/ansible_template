@@ -1,8 +1,8 @@
 ---
-- hosts: 192.168.6.10
+- hosts: 192.168.2.50
   gather_facts: False
-  become: True
-  become_method: sudo
+  #become: True
+  #become_method: sudo
   roles:
     - kernel
 

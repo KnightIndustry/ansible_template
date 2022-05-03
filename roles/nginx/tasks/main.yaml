@@ -17,9 +17,16 @@
       - "--exclude=logs/zmyiot.com/*"
   loop:
     - conf
-    - logs
+    #- logs
     #- certs
   notify:
     - reload nginx
     - random delay
+- name: verfy owership
+  file:
+    path: /usr/local/nginx
+    state: directory
+    recurse: yes
+    owner: nobody
+    group: nobody
 
