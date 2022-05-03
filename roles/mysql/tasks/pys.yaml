@@ -1,0 +1,7 @@
+
+- name: install python modules
+  yum:
+    name: python2-PyMySQL
+    state: present
+    disablerepo: '*'
+    enablerepo: 'local'

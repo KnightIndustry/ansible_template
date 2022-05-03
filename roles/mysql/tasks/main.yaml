@@ -1,5 +1,5 @@
 ---
-- name: Add user for mysql daemonn
+- name: Add user for mysql daemon
   user:
     name: mysql
     shell: /usr/sbin/nologin
@@ -36,6 +36,7 @@
   #  src: mysql.server
   #  dest: "{{ daemon_file }}"
   #  mode: a+x
+
 - name: Init mysql Instance
   shell: "{{ base_dir }}/bin/mysqld --initialize-insecure --user={{ user }} --basedir={{ base_dir }} --datadir={{ data_dir }}"
 - name: start on boot
@@ -43,6 +44,17 @@
     name: "{{ daemon }}"
     state: started
     enabled: yes
+
+- name: import python modules
+  include: pys.yaml
+- name: Create Remote User
+  mysql_user:
+    name: root
+    password: mysqlpass
+    host_all: yes
+    login_unix_socket: '/usr/local/mysql/mysql.sock'
+    priv: '*.*:ALL,GRANT'
+    state: present
 
 
 
