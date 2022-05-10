@@ -48,13 +48,17 @@
 - name: import python modules
   include: pys.yaml
 - name: Create Remote User
+  no_log: true
   mysql_user:
     name: root
-    password: mysqlpass
-    host_all: yes
+    password: "{{ item.p }}"
+    host: "{{ item.h }}"
     login_unix_socket: '/usr/local/mysql/mysql.sock'
     priv: '*.*:ALL,GRANT'
     state: present
+  loop:
+    - { h: '%', p: mysqlpass }
+    - { h: localhost, p: mysqlpass }
 
 
 

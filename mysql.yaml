@@ -6,8 +6,8 @@
   #become_user: root
   #become_method: sudo
   vars:
-    mysql_version: 8.0.25
-    mysql_archive: mysql-{{ mysql_version }}-linux-glibc2.12-x86_64.tar.xz
+    #mysql_version: 8.0.25
+    #mysql_archive: mysql-{{ mysql_version }}-linux-glibc2.12-x86_64.tar.xz
   roles:
     - mysql
 
