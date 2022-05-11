@@ -1,0 +1,10 @@
+---
+- set_fact:
+    postfix: linux-glibc2.12-x86_64.tar.gz
+  when:
+     - ( mysql_version[0:3] == '5.7' )
+- set_fact:
+    postfix: linux-glibc2.12-x86_64.tar.xz
+  when:
+     - ( mysql_version[0:3] == '8.0' )
+     
