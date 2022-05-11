@@ -4,7 +4,6 @@ baseurl = https://registry.zmyiot.com/nexus/repository/{{ ansible_distribution }
 enabled = 1
 gpgcheck = 0
 keepalive = yes
-# metadata one month
-metadata_expire = 2592000
+metadata_expire = 7d
 keepcache = 1
 
