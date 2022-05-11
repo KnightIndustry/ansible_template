@@ -1,0 +1,2 @@
+mysql_archive: mysql-{{ mysql_version }}-{{ postfix }}
+

@@ -1,3 +1,4 @@
 ---
-- include: fact.yaml
-- include: chrony.yaml
+#- include: fact.yaml
+#- include: chrony.yaml
+- include: vars.yaml

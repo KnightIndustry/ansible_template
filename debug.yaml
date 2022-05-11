@@ -1,10 +1,12 @@
 ---
-- hosts: test
+- hosts: local
   gather_facts: True
   #remote_user: root
   #become: True
   #become_user: root
   #become_method: sudo
+  vars:
+    mysql_version: 8.0.25
   roles:
     - debug
       #msg: "{{ ansible_default_ipv4.address }} {{ ansible_dns }}"
