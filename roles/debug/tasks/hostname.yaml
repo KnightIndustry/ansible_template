@@ -1,0 +1,5 @@
+- name: debug
+  debug:
+     #msg: "{{ ansible_default_ipv4.address.split('.')[-1] }}"
+     msg: "{{ ansible_default_ipv4.address.replace('.','-') }}"
+     
