@@ -5,8 +5,8 @@
   register: tomcat
 - name: install filebeat
   yum:
-    name: filebeat
-    state: latest
+    name: filebeat-7.17.2-1.x86_64
+    #state: latest
     disablerepo: '*'
     enablerepo: 'local'
   notify:

@@ -1,4 +1,4 @@
 ---
 - hostname:
-    name: IP-{{ ansible_default_ipv4.address.replace('.','-') }}
+    name: "{{ ansible_default_ipv4.address.replace('.','-') }}"
 
