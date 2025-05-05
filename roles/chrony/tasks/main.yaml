@@ -1,14 +1,10 @@
 ---
-- include_vars: waf.yaml
-  when: isWaf
-- include_vars: general.yaml
-  when: not isWaf
 - name: install chrony
   yum:
     name: chrony
     state: present
-    disablerepo: '*'
-    enablerepo: 'local'
+    #disablerepo: '*'
+    #enablerepo: 'local'
   notify:
     - start daemon
 - name: sync configuration
@@ -20,11 +16,13 @@
     mode: 0644
   notify:
     - start daemon
-- name: config daemon args
-  lineinfile:
-    path: /etc/sysconfig/chronyd
-    regexp: '^OPTIONS='
-    line: 'OPTIONS="-4"'
-  notify:
-    - start daemon
 
+- name: Kernel Performance
+  sysctl:
+    name: '{{ item.key }}'
+    value: '{{ item.value }}'
+    sysctl_file: /etc/sysctl.d/chrony.conf
+    reload: yes
+  loop:
+    - {key: "net.core.rmex_max", value: 26214400}
+    - {key: "net.core.netdev_max_backlog", value: 5000}
