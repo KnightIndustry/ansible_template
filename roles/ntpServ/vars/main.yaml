@@ -1,0 +1,7 @@
+---
+ntp_servers: 
+  - pool.ntp.org
+  - ntp.aliyun.com
+network: 0.0.0.0/0
+
+

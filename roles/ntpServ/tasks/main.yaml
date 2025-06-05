@@ -1,0 +1,20 @@
+---
+- name: make sure chronyd is installed
+  package:
+    name: chrony
+    state: present
+    #update_cache: yes
+  notify:
+    - Restart ntp server
+
+- name: deploy chrony.conf template
+  template:
+    src: chrony.conf.j2
+    dest: /etc/chrony.conf
+    owner: root
+    group: root
+    mode: 0644
+    #backup: yes
+  notify:
+    - Restart ntp server
+

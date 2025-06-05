@@ -1,0 +1,50 @@
+---
+#- name: Bind vip address to loopback
+#  command: ip addr add 172.16.51.100/32 dev  lo
+  #args:
+ #  warn: false
+ # ignore_errors: true
+
+#- name: Ensure vip on boot
+#  lineinfile:
+#    path: /etc/rc.d/rc.local
+#    line: "ip addr add {{ vip_address }}/32 dev  lo"
+#    state: present
+#    create: true
+- name: Create systemd unit file for VIP setup
+  copy:
+    dest: /etc/systemd/system/add-vip.service
+    content: |
+      [Unit]
+      Description=Add LVS VIP to loopback interface
+      After=network.target
+
+      [Service]
+      Type=oneshot
+      ExecStart=/sbin/ip addr add {{ lvs_vip }}/32 dev lo
+      ExecStop=/sbin/ip addr del {{ lvs_vip }}/32 dev lo
+      RemainAfterExit=true
+
+      [Install]
+      WantedBy=multi-user.target
+  notify: Reload systemd
+
+- name: Disable ARP on VIP
+  sysctl:
+    name: '{{ item.key }}'
+    value: '{{ item.value }}'
+    sysctl_file: /etc/sysctl.d/rs.conf
+    reload: yes
+  loop:
+    - {key: "net.ipv4.conf.all.arp_ignore", value: 1}
+    - {key: "net.ipv4.conf.all.arp_announce", value: 2}
+    - {key: "net.ipv4.conf.lo.arp_ignore", value: 1}
+    - {key: "net.ipv4.conf.lo.arp_announce", value: 2}
+
+- name: Allow NTP port if firewalld is running
+  firewalld:
+    port: 123/udp
+    permanent: yes
+    state: enabled
+    immediate: yes
+  when: firewalld_status.status.ActiveState == "active"

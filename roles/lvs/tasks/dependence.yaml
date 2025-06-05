@@ -1,0 +1,5 @@
+---
+#- name: 安装依赖包
+#  package:
+#    name: ipvsadm
+#    state: present

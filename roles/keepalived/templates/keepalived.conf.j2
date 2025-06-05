@@ -1,0 +1,39 @@
+! Configuration File for keepalived
+
+global_defs {
+script_user root
+enable_script_security
+}
+
+
+vrrp_instance VI_1 {
+  state {{ state }}
+  interface eth0
+  virtual_router_id 51
+  priority {{ 100 if state == 'MASTER' else 90 }}
+  advert_int 1
+  nopreempt
+  authentication {
+    auth_type PASS
+    auth_pass 123456
+  }
+  virtual_ipaddress {
+    172.16.51.100
+  }
+}
+
+virtual_server 172.16.51.100 123 {
+  delay_loop 6
+  lb_algo rr
+  lb_kind DR
+  protocol UDP
+
+{% for host in groups['rs'] %}
+  real_server {{ hostvars[host]['ansible_host'] }} 123 {
+    weight 50
+    UDP_CHECK {
+      connect_timeout 3
+    }
+  }
+{% endfor %}
+}

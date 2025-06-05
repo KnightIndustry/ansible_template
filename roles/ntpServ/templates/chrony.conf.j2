@@ -1,0 +1,17 @@
+{% for server in ntp_servers %}
+server {{ server }} iburst
+{% endfor %}
+makestep 1.0 3
+#maxupdateskew 100.0
+driftfile /var/lib/chrony/drift
+# Specify file containing keys for NTP authentication.
+keyfile /etc/chrony.keys
+logchange 0.5
+rtcsync
+allow {{ network }}
+#leapsecmode slew
+#maxslewrate 1000
+#smoothtime 400 0.001024 leaponly
+logdir /var/log/chrony
+
+

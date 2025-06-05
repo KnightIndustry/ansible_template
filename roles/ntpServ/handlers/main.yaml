@@ -1,0 +1,5 @@
+- name: Restart ntp server
+  service:
+    name: chronyd
+    state: restarted
+    enabled: yes

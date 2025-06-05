@@ -1,0 +1,26 @@
+---
+- name: Install keepalived
+  #ansible.builtin.package:
+  package:
+    name: keepalived
+    state: present
+  notify: Restart keepalived
+
+- name: Configure keepalived for LVS-DR
+  template:
+    src: keepalived.conf.j2
+    dest: /etc/keepalived/keepalived.conf
+    owner: root
+    group: root
+    mode: '0644'
+  notify: Restart keepalived
+- name: Configure keepalived for LVS-DR
+  copy:
+    src: check_chrony.sh
+    dest: /etc/keepalived/check_chrony.sh
+    owner: root
+    group: root
+    mode: '0644'
+    setype: keepalived_exec_t
+  notify: Restart keepalived
+

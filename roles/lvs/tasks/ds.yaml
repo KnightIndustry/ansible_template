@@ -1,0 +1,27 @@
+
+- name: 启用内核转发
+  sysctl:
+    name: '{{ item.key }}'
+    value: '{{ item.value }}'
+    sysctl_file: /etc/sysctl.d/ds.conf
+    reload: yes
+  loop:
+    - {key: "net.ipv4.ip_forward", value: 1}
+    - {key: "net.ipv4.conf.all.send_redirects", value: 0}
+    - {key: "net.ipv4.conf.default.send_redirects", value: 0}
+
+- name: Allow VRRP protocol if firewalld is running
+  firewalld:
+    rich_rule: 'rule protocol value="vrrp" accept'
+    permanent: yes
+    state: enabled
+    immediate: yes
+  when: firewalld_status.status.ActiveState == "active"
+
+- name: Allow NTP port if firewalld is running
+  firewalld:
+    port: 123/udp
+    permanent: yes
+    state: enabled
+    immediate: yes
+  when: firewalld_status.status.ActiveState == "active"
