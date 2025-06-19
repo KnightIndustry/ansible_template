@@ -1,0 +1,19 @@
+---
+- name: 收集主机信息并保存到控制节点
+  hosts: all:!lb:!repo
+  gather_facts: smart
+  tasks:
+    - name: 收集主机名、IP 地址和操作系统
+      set_fact:
+          #{{ ansible_default_ipv4.address }} ansible_ssh_user=root    ansible_ssh_pass='RZszyyy@686868'   hostname='{{ ansible_hostname }}'  os={{ ansible_os_family }}
+        host_info: |
+          {{ ansible_default_ipv4.address }}    ansible_ssh_user=root      hostname={{ ansible_hostname }}    os={{ ansible_os_family }}
+
+    - name: 将主机信息写入控制节点文件
+      local_action:
+        module: lineinfile
+        path: "/tmp/facts.txt"
+        line: "{{ host_info }}"
+        #dest: "/tmp/{{ inventory_hostname }}_info.txt"
+        create: yes
+
