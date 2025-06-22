@@ -1,0 +1,35 @@
+---
+- name: Install keepalived
+  #ansible.builtin.package:
+  package:
+    name: keepalived
+    state: present
+  notify: Restart keepalived
+
+- name: Configure keepalived for LVS-DR
+  template:
+    src: keepalived.conf.j2
+    dest: /etc/keepalived/keepalived.conf
+    owner: root
+    group: root
+    mode: '0644'
+  notify: Restart keepalived
+- name: Configure keepalived for LVS-DR
+  copy:
+    src: chk_ntp.sh
+    dest: /etc/keepalived/chk_ntp.sh
+    owner: root
+    group: root
+    mode: 'a+x'
+    setype: keepalived_exec_t
+  notify: Restart keepalived
+
+- name: Sync ntpdate command
+  synchronize:
+    src: ntp/
+    dest: /usr/local/ntp
+    recurse: true
+    owner: root
+    group: root
+    mode: '0644'
+    #setype: keepalived_exec_t

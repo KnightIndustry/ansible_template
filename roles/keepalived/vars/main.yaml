@@ -1,5 +1,6 @@
 ---
-rs:
-  - 172.16.51.4
-  - 172.16.51.131
+
+priority: 90
+when:
+- ( ansible_default_ipv4.address.split('.')[-1] == '22'  )
 

@@ -1,0 +1,7 @@
+---
+- name: Add vip for read server
+  systemd:
+    name: add-vip
+    enabled: true
+    state: restarted
+    daemon_reload: yes

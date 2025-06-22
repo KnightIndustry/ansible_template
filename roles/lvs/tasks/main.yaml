@@ -1,7 +1,11 @@
 ---
+- name: install ipvsadm
+  package:
+    name: ipvsadm
+    state: present
 #- include: dependence.yaml
 - include: rs.yaml
-  #when: "'rs' in group_names"
+  when: "'rs' in group_names"
   
-- include: ds.yaml
-  #when: "'ds' in group_names"
+#- include: ds.yaml
+#  when: "'ds' in group_names"
