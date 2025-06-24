@@ -5,3 +5,10 @@
     enabled: true
     state: restarted
     daemon_reload: yes
+
+- name: Add time options for lvs
+  systemd:
+    name: ipvs-timeout
+    enabled: true
+    state: restarted
+    daemon_reload: yes

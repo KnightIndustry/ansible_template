@@ -2,8 +2,6 @@
 
 global_defs {
 router_id LVS
-!script_user root
-!enable_script_security
 }
 
 
@@ -32,11 +30,12 @@ virtual_server {{ virtual_ip }} {{ virtual_port }} {
 {% for host in groups['rs'] %}
   real_server {{ host }} {{ virtual_port }} {
     weight 1
-    MISC_CHECK {
-      misc_path /etc/keepalived/chk_ntp.sh {{ host }}
-      misc_dynamic
+    UDP_CHECK {
+      connect_timeout 3
+      !retry 3
+      !delay_before_retry 3
+      !require_reply
     }
-
   }
 {% endfor %}
 }
