@@ -6,16 +6,16 @@
     #disablerepo: '*'
     #enablerepo: 'local'
   notify:
-    - start daemon
-- name: sync configuration
+    - restart chrony service
+- name: sync chrony configuration
   template:
-    src: chrony.j2
+    src: chrony.conf.j2
     dest: /etc/chrony.conf
     owner: root
     group: root
     mode: 0644
   notify:
-    - start daemon
+    - restart chrony service
 
 - name: Kernel Performance
   sysctl:

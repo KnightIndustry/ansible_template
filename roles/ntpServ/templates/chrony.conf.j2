@@ -1,5 +1,6 @@
-{% for server in ntp_servers %}
-server {{ server }} iburst
+{% for ntp in NtpServer %}
+server {{ ntp.server }} iburst minpoll 12{% if ntp.prefer | default(false) %} prefer{% endif %}
+
 {% endfor %}
 makestep 1.0 3
 #maxupdateskew 100.0

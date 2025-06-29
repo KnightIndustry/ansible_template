@@ -1,4 +1,4 @@
-- name: Restart ntp server
+- name: restart chrony service
   service:
     name: chronyd
     state: restarted

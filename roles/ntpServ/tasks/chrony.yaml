@@ -5,9 +5,9 @@
     state: present
     #update_cache: yes
   notify:
-    - Restart ntp server
+    - restart chrony service
 
-- name: deploy chrony.conf template
+- name: rsync chrony configuration
   template:
     src: chrony.conf.j2
     dest: /etc/chrony.conf
@@ -16,5 +16,5 @@
     mode: 0644
     #backup: yes
   notify:
-    - Restart ntp server
+    - restart chrony service
 

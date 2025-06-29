@@ -1,5 +1,5 @@
 ---
-- name: start daemon
+- name: restart chrony service
   service:
     name: chronyd
     enabled: yes

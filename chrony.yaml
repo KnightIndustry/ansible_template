@@ -1,5 +1,5 @@
 ---
-- hosts: waf
+- hosts: all
   gather_facts: True
   #become: True
   #remote_user: root

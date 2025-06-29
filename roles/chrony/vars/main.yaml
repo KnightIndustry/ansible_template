@@ -4,6 +4,3 @@ NtpServer:
     prefer: false
   - server: pool.ntp.org
     prefer: true
-network: 0.0.0.0/0
-
-
